@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 def generate_response(prompt):
     completions = openai.Completion.create(
