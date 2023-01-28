@@ -1,36 +1,26 @@
-import speech_recognition as sr
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
+import openai
 
-# Load pre-trained model and tokenizer
-tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-model = GPT2LMHeadModel.from_pretrained("gpt2")
+openai.api_key = "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"
 
-# Initialize recognizer class (for recognizing the speech)
-r = sr.Recognizer()
-
-# Function to generate a response
 def generate_response(prompt):
-    input_ids = tokenizer.encode(prompt, return_tensors="pt")
-    output = model.generate(input_ids, max_length=50)
-    return tokenizer.decode(output[0], skip_special_tokens=True)
+    completions = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt=prompt,
+        max_tokens=1024,
+        n=1,
+        stop=None,
+        temperature=0.7,
+    )
+    message = completions.choices[0].text
+    return message.strip()
 
 while True:
     prompt = input("Admin: ")
-    if prompt == "vox tts":
-        # Listening the speech and store in audio_text variable
-        with sr.Microphone() as source:
-            print("Talk")
-            audio = r.listen(source)
-            try:
-                # using google speech recognition
-                audio_text = r.recognize_google(audio)
-                print("You: ", audio_text)
-                response = generate_response(audio_text)
-                print("Vox: " , response)
-            except:
-                print("Sorry, I did not get that")
-    elif prompt == "vox die":
+    if prompt == "vox die":
         break
+    elif prompt == "vox tts":
+        # code for voice input goes here
+        pass
     else:
         response = generate_response(prompt)
         print("Vox: " , response)
