@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 def generate_response(prompt):
     completions = openai.Completion.create(
@@ -14,6 +14,7 @@ def generate_response(prompt):
     message = completions.choices[0].text
     return message.strip()
 
+
 while True:
     prompt = input("Admin: ")
     if prompt == "vox die":
@@ -23,4 +24,4 @@ while True:
         pass
     else:
         response = generate_response(prompt)
-        print("Vox: " , response)
+        print("Vox: ", response)
